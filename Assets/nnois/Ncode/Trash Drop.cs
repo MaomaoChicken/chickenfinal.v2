@@ -2,18 +2,22 @@ using UnityEngine;
 
 public class TrashDrop : MonoBehaviour
 {
-    Vector3 mousePositionoffset;
+    public float pickupRange = 0.5f;
+    public bool isBeingPickedUp = false;
 
-    private Vector3 GetMouseWorldProsition()
+    void OnMouseDown()
     {
-        return Camera.main.ScreenToWorldPoint(Input.mousePosition);
+       if (isBeingPickedUp) return;
+        Player player = FindFirstObjectByType<Player>();
+        if (player != null)
+        {
+            isBeingPickedUp = true;
+            player.CollectItem(this);
+        }
     }
-    private void OnMouseDown()
+    void OnDrawGizmosSelected()
     {
-        mousePositionoffset = gameObject.transform.position - GetMouseWorldProsition();
-    }
-    private void OnMouseDrag()
-    {
-        transform.position = GetMouseWorldProsition() + mousePositionoffset;
+        Gizmos.color = Color.cyan;
+        Gizmos.DrawWireSphere(transform.position, pickupRange);
     }
 }
