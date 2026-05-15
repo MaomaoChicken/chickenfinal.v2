@@ -1,16 +1,19 @@
 using UnityEngine;
 
-public class Inventory : MonoBehaviour
+public class InventoryToggle : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+    public GameObject mainInventoryGroup;
+    public TabManager tabManager;
 
-    // Update is called once per frame
     void Update()
     {
-        
+        if (Input.GetKeyDown(KeyCode.Tab))
+        {
+            bool isOpen = mainInventoryGroup.activeSelf;
+            mainInventoryGroup.SetActive(!isOpen);
+
+            if (!isOpen)
+                tabManager.ShowTab("inventory");
+        }
     }
 }
