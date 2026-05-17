@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 672e036c9d3b1cf4886710b10e43f872
+guid: a314d3f941b414148901177300bb755f
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -8296385383580801948
-    second: walk_0
+      213: 8950924644376016096
+    second: IMG_0710-Photoroom_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -113,23 +113,23 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: walk_0
+      name: IMG_0710-Photoroom_0
       rect:
         serializedVersion: 2
-        x: 815
-        y: 68
-        width: 715
-        height: 1693
+        x: 549
+        y: 30
+        width: 988
+        height: 1769
       alignment: 9
-      pivot: {x: 0.50421065, y: 0.52486926}
+      pivot: {x: 0.65762144, y: 0.525518}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 4646ce323715ddc80800000000000000
-      internalID: -8296385383580801948
+      spriteID: 0e4725f3a82183c70800000000000000
+      internalID: 8950924644376016096
       vertices: []
       indices: 
       edges: []
@@ -138,7 +138,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: d33a26bf169535049afb654fd810e52a
+    spriteID: 8342390bd91a9c44181f9a3bfb24db2c
     internalID: 0
     vertices: []
     indices: 
@@ -148,7 +148,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      walk_0: -8296385383580801948
+      IMG_0710-Photoroom_0: 8950924644376016096
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
