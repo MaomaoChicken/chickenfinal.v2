@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c658d723cd0605c4b846fc43fe81b8b9, type: 3}
+  m_Name: OR twin
+  m_EditorClassIdentifier: Assembly-CSharp::DATAChar
+  idleSprite: {fileID: 5414535511040442157, guid: ff2b40b2d9266dd4ba5e75bac3cc171b, type: 3}
+  walkSprites:
+  - {fileID: 5312489343715107711, guid: f47f690b599448a478ef582b5cb77560, type: 3}
+  - {fileID: -293557802633289688, guid: d8c5760716fab0948ab5e15540956ee6, type: 3}
+  walkAnimSpeed: 0.2
