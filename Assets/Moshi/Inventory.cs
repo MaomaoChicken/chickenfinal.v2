@@ -1,19 +1,26 @@
 using UnityEngine;
 
-public class InventoryToggle : MonoBehaviour
+public class Inventory : MonoBehaviour
 {
-    public GameObject mainInventoryGroup;
+    public GameObject mainInventory;
+    public GameObject mainCrafting;
     public TabManager tabManager;
 
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Tab))
         {
-            bool isOpen = mainInventoryGroup.activeSelf;
-            mainInventoryGroup.SetActive(!isOpen);
+            bool isOpen = mainInventory.activeSelf || mainCrafting.activeSelf;
 
-            if (!isOpen)
+            if (isOpen)
+            {
+                mainInventory.SetActive(false);
+                mainCrafting.SetActive(false);
+            }
+            else
+            {
                 tabManager.ShowTab("inventory");
+            }
         }
     }
 }
