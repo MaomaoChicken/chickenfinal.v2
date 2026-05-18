@@ -1,6 +1,7 @@
 using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -13,7 +14,8 @@ public class Player : MonoBehaviour
     public float moveToItemSpeed = 4f;
     public float collectDuration = 0.5f;
     public bool isCollecting = false;
-   
+    public TextMeshProUGUI goldText;
+
     void Awake()
     {
         isFacingRight = true;
