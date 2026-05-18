@@ -3,159 +3,223 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-/// <summary>
-/// UI หลักของร้านค้า — ใช้ ShopItemData แยกจาก ItemData เดิม
-/// ปิด Inventory เดิมอัตโนมัติเมื่อเปิดร้าน
 public class ShopUI : MonoBehaviour
 {
-    [Header("Shop Panel")]
+    [Header("Shop Panel (หน้าหลัก — ปุ่ม Buy/Sell/Close)")]
     public GameObject shopPanel;
     public Image merchantPortraitImage;
     public TextMeshProUGUI merchantNameText;
     public TextMeshProUGUI goldText;
 
-    [Header("Tabs")]
-    public Button tabBuyButton;
-    public Button tabSellButton;
-    public Button closeButton;
+    [Header("ปุ่มหน้าหลัก")]
+    public Button buyPageButton;        // กดแล้วเปิด BuyPanel
+    public Button sellPageButton;       // กดแล้วเปิด SellPanel
+    public Button closeButton;          // ปิดร้าน
 
-    [Header("Item List")]
-    public Transform itemContainer;
+    [Header("BuyPanel (หน้าซื้อ — แยกออกมา)")]
+    public GameObject buyPanel;
+    public Transform buyItemContainer;  // Content ใน BuyPanel ScrollView
+    public Button buyBackButton;        // ปุ่มกลับ
+
+    [Header("SellPanel (หน้าขาย — แยกออกมา)")]
+    public GameObject sellPanel;
+    public Transform sellItemContainer; // Content ใน SellPanel ScrollView
+    public Button sellBackButton;       // ปุ่มกลับ
+
+    [Header("Item Prefab (ใช้ร่วมกันทั้งสองหน้า)")]
     public GameObject itemSlotPrefab;
 
-    [Header("สินค้าพ่อค้า (ใช้ ShopItemData)")]
+    [Header("สินค้าพ่อค้า")]
     public List<ShopItemData> merchantItems = new List<ShopItemData>();
 
     [Header("Negotiation Panel")]
     public Negotiationui negotiationUI;
 
-    // เชื่อม Inventory เดิม
     private Inventory inventorySystem;
-    private bool isSellMode = false;
 
-    // ====================================================
     void Start()
     {
-        shopPanel.SetActive(false);
-        tabBuyButton.onClick.AddListener(() => SetMode(false));
-        tabSellButton.onClick.AddListener(() => SetMode(true));
-        closeButton.onClick.AddListener(CloseShop);
+        // ปิดทุก panel ก่อน
+        if (shopPanel) shopPanel.SetActive(false);
+        if (buyPanel) buyPanel.SetActive(false);
+        if (sellPanel) sellPanel.SetActive(false);
+
+        // หน้าหลัก
+        if (buyPageButton) buyPageButton.onClick.AddListener(OpenBuyPanel);
+        if (sellPageButton) sellPageButton.onClick.AddListener(OpenSellPanel);
+        if (closeButton) closeButton.onClick.AddListener(CloseShop);
+
+        // ปุ่มกลับในแต่ละหน้า
+        if (buyBackButton) buyBackButton.onClick.AddListener(BackToMain);
+        if (sellBackButton) sellBackButton.onClick.AddListener(BackToMain);
 
         inventorySystem = FindFirstObjectByType<Inventory>();
     }
 
     void Update()
     {
-        if (shopPanel.activeSelf && PlayerInventory.Instance != null)
+        bool anyOpen = (shopPanel != null && shopPanel.activeSelf)
+                    || (buyPanel != null && buyPanel.activeSelf)
+                    || (sellPanel != null && sellPanel.activeSelf);
+
+        if (!anyOpen) return;
+
+        if (goldText != null && PlayerInventory.Instance != null)
             goldText.text = $"Gold: {PlayerInventory.Instance.gold}";
 
-        if (shopPanel.activeSelf && Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape))
             CloseShop();
     }
 
     // ====================================================
+    // เปิดร้าน → แสดงหน้าหลักก่อน (มีแค่ปุ่ม Buy / Sell / Close)
     public void OpenShop(MerchantNPC merchant)
     {
-        // ปิด Inventory/Crafting เดิมก่อน
+        if (merchant == null) return;
+
         if (inventorySystem != null)
         {
-            inventorySystem.mainInventory.SetActive(false);
-            inventorySystem.mainCrafting.SetActive(false);
+            if (inventorySystem.mainInventory != null)
+                inventorySystem.mainInventory.SetActive(false);
+            if (inventorySystem.mainCrafting != null)
+                inventorySystem.mainCrafting.SetActive(false);
         }
 
-        merchantNameText.text = merchant.merchantName;
-        if (merchant.merchantPortrait != null)
+        if (merchantNameText != null)
+            merchantNameText.text = merchant.merchantName;
+
+        if (merchantPortraitImage != null && merchant.merchantPortrait != null)
             merchantPortraitImage.sprite = merchant.merchantPortrait;
 
-        isSellMode = false;
-        shopPanel.SetActive(true);
-        RefreshItemList();
+        // เปิดเฉพาะหน้าหลัก
+        if (shopPanel) shopPanel.SetActive(true);
+        if (buyPanel) buyPanel.SetActive(false);
+        if (sellPanel) sellPanel.SetActive(false);
+    }
+
+    // ====================================================
+    // กด "Buy" → ซ่อนหน้าหลัก เปิด BuyPanel
+    void OpenBuyPanel()
+    {
+        if (shopPanel) shopPanel.SetActive(false);
+        if (sellPanel) sellPanel.SetActive(false);
+        if (buyPanel) buyPanel.SetActive(true);
+
+        RefreshList(buyItemContainer, isSell: false);
+    }
+
+    // กด "Sell" → ซ่อนหน้าหลัก เปิด SellPanel
+    void OpenSellPanel()
+    {
+        if (shopPanel) shopPanel.SetActive(false);
+        if (buyPanel) buyPanel.SetActive(false);
+        if (sellPanel) sellPanel.SetActive(true);
+
+        RefreshList(sellItemContainer, isSell: true);
+    }
+
+    // ปุ่มกลับ → เปิดหน้าหลักอีกครั้ง
+    void BackToMain()
+    {
+        if (buyPanel) buyPanel.SetActive(false);
+        if (sellPanel) sellPanel.SetActive(false);
+        if (shopPanel) shopPanel.SetActive(true);
+        negotiationUI?.Hide();
     }
 
     public void CloseShop()
     {
-        shopPanel.SetActive(false);
+        if (shopPanel) shopPanel.SetActive(false);
+        if (buyPanel) buyPanel.SetActive(false);
+        if (sellPanel) sellPanel.SetActive(false);
         negotiationUI?.Hide();
     }
 
-    void SetMode(bool sell)
-    {
-        isSellMode = sell;
-        RefreshItemList();
-    }
-
     // ====================================================
-    void RefreshItemList()
+    void RefreshList(Transform container, bool isSell)
     {
-        foreach (Transform child in itemContainer)
+        if (container == null || itemSlotPrefab == null) return;
+
+        foreach (Transform child in container)
             Destroy(child.gameObject);
 
-        if (isSellMode)
+        if (PlayerInventory.Instance == null)
         {
-            // ของที่ player มี — แปลง ItemData → ShopItemData ชั่วคราวเพื่อต่อราคา
+            Debug.LogWarning("PlayerInventory.Instance is null!");
+            return;
+        }
+
+        if (isSell)
+        {
             foreach (var kv in PlayerInventory.Instance.GetAllItems())
             {
-                // หา ShopItemData ที่ตรงกับ ItemData นี้
-                ShopItemData match = merchantItems.Find(s => s.itemData == kv.Key);
-                if (match != null)
-                    CreateSlot(match, kv.Value);
-                else
+                if (kv.Key == null) continue;
+                ShopItemData match = merchantItems.Find(s => s != null && s.itemData == kv.Key);
+                if (match == null)
                 {
-                    // item ที่พ่อค้าไม่รู้จัก → สร้าง ShopItemData ชั่วคราวด้วยราคา 0
                     ShopItemData temp = ScriptableObject.CreateInstance<ShopItemData>();
                     temp.itemData = kv.Key;
-                    temp.basePrice = 50; // ราคา default เมื่อพ่อค้าไม่รู้จัก
-                    CreateSlot(temp, kv.Value);
+                    temp.basePrice = 50;
+                    match = temp;
                 }
+                CreateSlot(container, match, kv.Value, isSell: true);
             }
         }
         else
         {
             foreach (var shopItem in merchantItems)
-                CreateSlot(shopItem, -1);
+            {
+                if (shopItem == null) continue;
+                CreateSlot(container, shopItem, -1, isSell: false);
+            }
         }
     }
 
-    void CreateSlot(ShopItemData shopItem, int qty)
+    void CreateSlot(Transform container, ShopItemData shopItem, int qty, bool isSell)
     {
-        GameObject go = Instantiate(itemSlotPrefab, itemContainer);
+        if (shopItem == null) return;
+        GameObject go = Instantiate(itemSlotPrefab, container);
         ItemSlotUI slot = go.GetComponent<ItemSlotUI>();
-        slot.Setup(shopItem, qty, isSellMode, OnDirectAction, OnTalkPrice);
+        if (slot == null) return;
+        slot.Setup(shopItem, qty, isSell, OnDirectAction, OnTalkPrice);
     }
 
     // ====================================================
     void OnDirectAction(ShopItemData shopItem)
     {
+        if (shopItem == null || PlayerInventory.Instance == null) return;
         var inv = PlayerInventory.Instance;
 
-        if (isSellMode)
+        // ตรวจว่าอยู่ใน SellPanel หรือ BuyPanel
+        bool isSell = sellPanel != null && sellPanel.activeSelf;
+
+        if (isSell)
         {
             if (!inv.HasItem(shopItem.itemData)) { Debug.Log("ไม่มี item!"); return; }
             inv.RemoveItem(shopItem.itemData);
             inv.EarnGold(shopItem.basePrice);
-            Debug.Log($"ขาย {shopItem.ItemName} +{shopItem.basePrice} G");
+            RefreshList(sellItemContainer, isSell: true);
         }
         else
         {
             if (!inv.HasGold(shopItem.basePrice)) { Debug.Log("Gold ไม่พอ!"); return; }
             inv.SpendGold(shopItem.basePrice);
             inv.AddItem(shopItem.itemData);
-            Debug.Log($"ซื้อ {shopItem.ItemName} -{shopItem.basePrice} G");
+            RefreshList(buyItemContainer, isSell: false);
         }
-
-        RefreshItemList();
     }
 
     void OnTalkPrice(ShopItemData shopItem)
     {
-        var mode = isSellMode ? PriceNegotiator.ShopMode.Sell : PriceNegotiator.ShopMode.Buy;
+        if (shopItem == null || negotiationUI == null) return;
+        bool isSell = sellPanel != null && sellPanel.activeSelf;
+        var mode = isSell ? PriceNegotiator.ShopMode.Sell : PriceNegotiator.ShopMode.Buy;
         negotiationUI.StartNegotiation(shopItem, mode, OnNegotiationComplete);
     }
 
     void OnNegotiationComplete(bool success, ShopItemData shopItem, int finalPrice, PriceNegotiator.ShopMode mode)
     {
-        if (!success) return;
-
+        if (!success || shopItem == null || PlayerInventory.Instance == null) return;
         var inv = PlayerInventory.Instance;
 
         if (mode == PriceNegotiator.ShopMode.Buy)
@@ -163,16 +227,14 @@ public class ShopUI : MonoBehaviour
             if (!inv.HasGold(finalPrice)) { Debug.Log("Gold ไม่พอ!"); return; }
             inv.SpendGold(finalPrice);
             inv.AddItem(shopItem.itemData);
-            Debug.Log($"ซื้อ {shopItem.ItemName} ต่อได้ {finalPrice} G");
+            RefreshList(buyItemContainer, isSell: false);
         }
         else
         {
             if (!inv.HasItem(shopItem.itemData)) { Debug.Log("ไม่มี item!"); return; }
             inv.RemoveItem(shopItem.itemData);
             inv.EarnGold(finalPrice);
-            Debug.Log($"ขาย {shopItem.ItemName} ต่อได้ {finalPrice} G");
+            RefreshList(sellItemContainer, isSell: true);
         }
-
-        RefreshItemList();
     }
 }
