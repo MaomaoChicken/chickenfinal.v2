@@ -2,6 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Object = UnityEngine.Object;
 
 /// <summary>
 /// Prefab แต่ละ slot ในร้าน — รับ ShopItemData
@@ -11,7 +12,6 @@ public class ItemSlotUI : MonoBehaviour
     public Image itemIcon;
     public TextMeshProUGUI itemNameText;
     public TextMeshProUGUI itemPriceText;
-    public TextMeshProUGUI itemQtyText;
 
     [Header("Buttons")]
     public Button sellButton;
@@ -38,8 +38,6 @@ public class ItemSlotUI : MonoBehaviour
         itemNameText.text = shopItem.ItemName;
         itemPriceText.text = $"{shopItem.basePrice} G";
 
-        if (itemQtyText != null)
-            itemQtyText.text = qty < 0 ? "∞" : $"x{qty}";
 
         if (sellButtonLabel != null)
             sellButtonLabel.text = isSellMode ? "ขาย" : "ซื้อ";

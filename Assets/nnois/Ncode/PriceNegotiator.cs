@@ -10,7 +10,7 @@ public class PriceNegotiator
     private int maxAcceptable;
 
     private int roundCount = 0;
-    private const int MAX_ROUNDS = 5;
+    private const int MAX_ROUNDS = 3;
 
     public bool IsFinished { get; private set; } = false;
     public bool PlayerWon { get; private set; } = false;

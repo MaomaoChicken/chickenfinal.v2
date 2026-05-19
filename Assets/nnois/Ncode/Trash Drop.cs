@@ -5,6 +5,8 @@ public class TrashDrop : MonoBehaviour
     public float pickupRange = 0.5f;
     public bool isBeingPickedUp = false;
 
+    [Header("Item drop to ItemData")]
+    public ItemData itemData;
     void OnMouseDown()
     {
        if (isBeingPickedUp) return;

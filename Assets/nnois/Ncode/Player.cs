@@ -81,6 +81,11 @@ public class Player : MonoBehaviour
             GetComponent<SpriteRenderer>().sprite = sprite[2];
         if (item != null)
         {
+            if (item.itemData != null && PlayerInventory.Instance)
+            {
+                PlayerInventory.Instance.AddItem(item.itemData);
+                Debug.Log($"‡°Á∫ {item.itemData.itemName}·≈È««««««««");
+            }
                 Debug.Log($"[Player] ‡°Á∫ {item.gameObject.name}·≈È«");
                 item.isBeingPickedUp = false;
                 Destroy(item.gameObject);

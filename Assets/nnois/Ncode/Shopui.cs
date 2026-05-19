@@ -29,7 +29,7 @@ public class ShopUI : MonoBehaviour
     [Header("Item Prefab (ใช้ร่วมกันทั้งสองหน้า)")]
     public GameObject itemSlotPrefab;
 
-    [Header("สินค้าพ่อค้า")]
+    [Header("ขายให้พ่อค้า")]
     public List<ShopItemData> merchantItems = new List<ShopItemData>();
 
     [Header("Negotiation Panel")]
