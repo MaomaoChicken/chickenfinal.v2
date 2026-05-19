@@ -21,7 +21,8 @@ public class NPCSpawner : MonoBehaviour
     public float spawnY = -2f;
 
     [Header("ÃÐÂÐ¹Í¡¨Í·Õè Spawn")]
-    public float spawnOffsetX = 1.5f;
+    public float maxspawnOffsetX = 1.5f;
+    public float minspawnOffsetX = -1.5f;
 
     [Header("Sorting Layer")]
     public string sortingLayerName = "Default";
@@ -60,9 +61,7 @@ public class NPCSpawner : MonoBehaviour
 
         bool fromLeft = Random.value > 0.5f;
         float screenEdgeX = Camera.main.orthographicSize * Camera.main.aspect;
-        float spawnX = fromLeft
-            ? -screenEdgeX - spawnOffsetX
-            : screenEdgeX + spawnOffsetX;
+        float spawnX = Random.Range(minspawnOffsetX, maxspawnOffsetX);
 
         GameObject npc = Instantiate(npcPrefab, new Vector3(spawnX, spawnY, 0f), Quaternion.identity);
         npc.name = $"NPC_{Random.Range(100, 999)}";
@@ -120,7 +119,7 @@ public class NPCSpawner : MonoBehaviour
         if (Camera.main == null) return;
         float edgeX = Camera.main.orthographicSize * Camera.main.aspect;
         Gizmos.color = Color.blue;
-        Gizmos.DrawLine(new Vector3(-edgeX - spawnOffsetX, spawnY - 0.3f), new Vector3(-edgeX - spawnOffsetX, spawnY + 0.3f));
-        Gizmos.DrawLine(new Vector3(edgeX + spawnOffsetX, spawnY - 0.3f), new Vector3(edgeX + spawnOffsetX, spawnY + 0.3f));
+        Gizmos.DrawLine(new Vector3(-edgeX - maxspawnOffsetX,minspawnOffsetX, spawnY - 0.3f), new Vector3(-edgeX - maxspawnOffsetX,minspawnOffsetX, spawnY + 0.3f));
+        Gizmos.DrawLine(new Vector3(edgeX + maxspawnOffsetX,minspawnOffsetX, spawnY - 0.3f), new Vector3(edgeX + maxspawnOffsetX,minspawnOffsetX, spawnY + 0.3f));
     }
 }

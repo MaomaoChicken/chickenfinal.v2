@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c658d723cd0605c4b846fc43fe81b8b9, type: 3}
+  m_Name: purbabe
+  m_EditorClassIdentifier: Assembly-CSharp::DATAChar
+  idleSprite: {fileID: -5347853073895422892, guid: d2d1714010321624f8c8336e845227d3, type: 3}
+  walkSprites:
+  - {fileID: 5977839336737442111, guid: d2b61e1b8febb4d438226e3b417bcb23, type: 3}
+  - {fileID: 6898808667775882207, guid: 5921d1f2e8ccc8e4cace72ffe3b52578, type: 3}
+  walkAnimSpeed: 0.15
