@@ -2,10 +2,11 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using Object = UnityEngine.Object;
 
 /// <summary>
-/// Prefab แต่ละ slot ในร้าน — รับ ShopItemData
+/// กดที่ slot → เปลี่ยนสี (selected)
+/// ShopUI จะอ่าน selectedSlot แล้วให้ปุ่ม Sell/Talk ด้านล่างทำงาน
+/// </summary>
 public class ItemSlotUI : MonoBehaviour
 {
     [Header("Display")]
@@ -13,42 +14,52 @@ public class ItemSlotUI : MonoBehaviour
     public TextMeshProUGUI itemNameText;
     public TextMeshProUGUI itemPriceText;
 
-    [Header("Buttons")]
-    public Button sellButton;
-    public Button talkButton;
-    public TextMeshProUGUI sellButtonLabel;
-    public TextMeshProUGUI talkButtonLabel;
+    [Header("สี")]
+    public Color normalColor = new Color(1f, 1f, 1f, 0.3f);
+    public Color selectedColor = new Color(1f, 0.8f, 0.2f, 0.8f);
 
-    private Action<ShopItemData> onSell;
-    private Action<ShopItemData> onTalk;
-    private ShopItemData data;
+    public ShopItemData Data { get; private set; }
+    public bool IsSelected { get; private set; }
 
-    public void Setup(ShopItemData shopItem, int qty, bool isSellMode,
-                      Action<ShopItemData> sellCallback,
-                      Action<ShopItemData> talkCallback)
+    private Image bg;
+    private Action<ItemSlotUI> onSelected;
+
+    void Awake()
     {
-        data = shopItem;
-        onSell = sellCallback;
-        onTalk = talkCallback;
+        bg = GetComponent<Image>() ?? gameObject.AddComponent<Image>();
+        bg.color = normalColor;
 
-        // แสดงข้อมูลจาก ItemData เดิมผ่าน ShopItemData
-        if (itemIcon != null && shopItem.Icon != null)
-            itemIcon.sprite = shopItem.Icon;
+        Button btn = GetComponent<Button>() ?? gameObject.AddComponent<Button>();
+        btn.transition = Selectable.Transition.None;
+        btn.onClick.RemoveAllListeners();
+        btn.onClick.AddListener(Select);
+    }
 
-        itemNameText.text = shopItem.ItemName;
-        itemPriceText.text = $"{shopItem.basePrice} G";
+    public void Setup(ShopItemData shopItem, int qty, Action<ItemSlotUI> selectCallback)
+    {
+        if (shopItem == null) return;
+        Data = shopItem;
+        onSelected = selectCallback;
+        IsSelected = false;
+        bg.color = normalColor;
 
+        if (itemIcon != null)
+        {
+            itemIcon.enabled = shopItem.Icon != null;
+            if (shopItem.Icon != null) itemIcon.sprite = shopItem.Icon;
+        }
+        if (itemNameText != null) itemNameText.text = shopItem.ItemName;
+        if (itemPriceText != null) itemPriceText.text = $"{shopItem.basePrice} G";
+    }
 
-        if (sellButtonLabel != null)
-            sellButtonLabel.text = isSellMode ? "ขาย" : "ซื้อ";
+    public void Select()
+    {
+        onSelected?.Invoke(this);
+    }
 
-        if (talkButtonLabel != null)
-            talkButtonLabel.text = isSellMode ? "ต่อราคาขาย" : "ต่อราคาซื้อ";
-
-        sellButton.onClick.RemoveAllListeners();
-        sellButton.onClick.AddListener(() => onSell?.Invoke(data));
-
-        talkButton.onClick.RemoveAllListeners();
-        talkButton.onClick.AddListener(() => onTalk?.Invoke(data));
+    public void SetSelected(bool selected)
+    {
+        IsSelected = selected;
+        bg.color = selected ? selectedColor : normalColor;
     }
 }
