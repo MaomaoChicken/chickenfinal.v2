@@ -33,7 +33,7 @@ RectTransform:
   m_Father: {fileID: 6472506107178306907}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -184,7 +184,7 @@ RectTransform:
   m_Father: {fileID: 2727116893256498135}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -1004,7 +1004,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1795434280594889272
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1025,9 +1025,9 @@ RectTransform:
   m_Father: {fileID: 408991622440015720}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 960, y: 540}
-  m_SizeDelta: {x: 1920, y: 1080}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &8426497049404564213
 Canvas:
@@ -1107,7 +1107,6 @@ MonoBehaviour:
   shopPanel: {fileID: 2250529543424300774}
   merchantPortraitImage: {fileID: 8751329115193701947}
   merchantNameText: {fileID: 0}
-  goldText: {fileID: 7972717994796556120}
   buyPageButton: {fileID: 4114548702001668502}
   sellPageButton: {fileID: 5121993142445117560}
   closeButton: {fileID: 5605310144377109005}
@@ -1117,10 +1116,13 @@ MonoBehaviour:
   sellPanel: {fileID: 1204348009953105308}
   sellItemContainer: {fileID: 5368532895071439777}
   sellBackButton: {fileID: 5696013671507184717}
+  actionSellButton: {fileID: 0}
+  actionTalkButton: {fileID: 0}
+  actionSellLabel: {fileID: 0}
   itemSlotPrefab: {fileID: 645533772578885078, guid: 3992d2392df51514db10ed536118f5f3, type: 3}
   merchantItems:
   - {fileID: 11400000, guid: 7453ae48277d4e44a8436c9fb5587ee0, type: 2}
-  negotiationUI: {fileID: 487563634539740702}
+  negotiationui: {fileID: 0}
 --- !u!1 &2404885804420363135
 GameObject:
   m_ObjectHideFlags: 0
@@ -3791,7 +3793,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &4533697852198511981
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3815,9 +3817,9 @@ RectTransform:
   m_Father: {fileID: 408991622440015720}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 960, y: 540}
-  m_SizeDelta: {x: 1920, y: 1080}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &8993537169615194384
 Canvas:

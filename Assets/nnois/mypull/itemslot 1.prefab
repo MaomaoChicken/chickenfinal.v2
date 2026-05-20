@@ -55,10 +55,8 @@ MonoBehaviour:
   itemIcon: {fileID: 346556469636921046}
   itemNameText: {fileID: 7679154689893608170}
   itemPriceText: {fileID: 6342053184693803979}
-  itemQtyText: {fileID: 0}
-  popupPanel: {fileID: 1367463671741314268}
-  sellButton: {fileID: 5089215541614222989, guid: 576f39782dc6325449ddcf9502d727f8, type: 3}
-  talkButton: {fileID: 6372664368956034069, guid: 2062881676d63754e84b57f67a769711, type: 3}
+  normalColor: {r: 0.6509434, g: 0.51891243, b: 0.51891243, a: 0.3}
+  selectedColor: {r: 1, g: 0.8, b: 0.2, a: 0.8}
 --- !u!1 &1367463671741314268
 GameObject:
   m_ObjectHideFlags: 0

@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9273cdaf373e11a49b60fac6b71569f8, type: 3}
-  m_Name: NewShopItem
+  m_Name: koud
   m_EditorClassIdentifier: Assembly-CSharp::ShopItemData
   itemData: {fileID: 11400000, guid: add47dd7916da8748851c19f3d2c156a, type: 2}
   basePrice: 20
-  minPriceMultiplier: 0.5
-  maxPriceMultiplier: 1.5
-  merchantStubborn: 50
+  minPriceMultiplier: 0.411
+  maxPriceMultiplier: 2.008
+  merchantStubborn: 60
