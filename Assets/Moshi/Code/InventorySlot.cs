@@ -18,6 +18,10 @@ public class InventorySlot : MonoBehaviour
     {
         UpdateUI();
     }
+    public ItemData GetItem()
+    {
+        return currentItem;
+    }
 
     public void SetItem(ItemData item, int amount)
     {

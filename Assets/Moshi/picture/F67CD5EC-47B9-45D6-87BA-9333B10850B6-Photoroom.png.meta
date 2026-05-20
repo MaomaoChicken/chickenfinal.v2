@@ -103,12 +103,12 @@ TextureImporter:
       name: F67CD5EC-47B9-45D6-87BA-9333B10850B6-Photoroom_0
       rect:
         serializedVersion: 2
-        x: 199
+        x: 193
         y: 71
-        width: 417
-        height: 640
+        width: 423
+        height: 646
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
@@ -125,7 +125,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
+    spriteID: 1c9e90704e92208459be9df4986f77cc
     internalID: 0
     vertices: []
     indices: 

@@ -78,7 +78,6 @@ public class ShopUI : MonoBehaviour
         if (inventorySystem != null)
         {
             if (inventorySystem.mainInventory != null) inventorySystem.mainInventory.SetActive(false);
-            if (inventorySystem.mainCrafting != null) inventorySystem.mainCrafting.SetActive(false);
         }
         if (merchantNameText != null) merchantNameText.text = merchant.merchantName;
         if (merchantPortraitImage != null && merchant.merchantPortrait != null)
