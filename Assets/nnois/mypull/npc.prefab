@@ -175,8 +175,8 @@ MonoBehaviour:
   maxWalkDistance: 5
   minIdleTime: 1
   maxIdleTime: 4
-  boundsMin: {x: -5, y: -3}
-  boundsMax: {x: 5, y: 3}
+  boundsMin: {x: -100, y: 0}
+  boundsMax: {x: 100, y: 0}
   characterData: {fileID: 0}
   walkingParmeter: isWalking
   showGizmos: 1
